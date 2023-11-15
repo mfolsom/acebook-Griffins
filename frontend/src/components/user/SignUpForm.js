@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import styles from './SignUpForm.module.css';
+
 
 // Signup Page
 const SignUpForm = ({ navigate }) => {
@@ -6,7 +8,7 @@ const SignUpForm = ({ navigate }) => {
   // STATE VARIABLES ==========================
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [errorMsg, setErrorMsg] = useState("")
   // FORM SUBMISSION FOR NEW USER ====================
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,11 +20,17 @@ const SignUpForm = ({ navigate }) => {
       },
       body: JSON.stringify({ email: email, password: password }) // <===== BODY OF REQUEST: email and password
     })
-      .then(response => {
-        if (response.status === 201) {
+      .then(async response => {
+        
+        if(response.status === 201) {
+
           navigate('/login') // If successful, navigate to login page
+          
         } else {
+          const errorData = await response.json();
           navigate('/signup') // If unsuccessful, stay on the signup page
+          setErrorMsg(errorData.message)
+          console.log(errorData.message)
         }
       })
   }
@@ -38,19 +46,28 @@ const SignUpForm = ({ navigate }) => {
 
 
   // JSX FOR THE UI OF THE COMPONENT =====================
-  // currently shows two input fields and one button with no styling.
-  // JSX FOR THE UI OF THE COMPONENT =====================
-  return (
-    <div>
+
+    // currently shows two input fields and one button with no styling.
+    return (<div className={styles.Middle}>
       <h1>Sign Up</h1>
-      <p>Please fill out the form below to create a new account.</p>
       <form onSubmit={handleSubmit}>
-        <input placeholder="Email" id="email" type='text' value={email} onChange={handleEmailChange} />
-        <input placeholder="Password" id="password" type='password' value={password} onChange={handlePasswordChange} />
-        <input id='submit' type="submit" value="Submit" />
+
+          <input placeholder="Email" id="email" type='text' value={ email } className={styles.inputField} onChange={handleEmailChange} />
+          <br/>
+          <input placeholder="Password" id="password" type='password' value={ password } className={styles.inputField} onChange={handlePasswordChange} />
+          <br/>
+          <br/>
+        <input id='submit' type="submit" className={styles.Button} value="Submit"/>
+      //TODO Double check style sheet references line 64 styles.link
+      <font color="#505050 ">Have an account?</font>
+    <br/>
+    <a href="/login" font color="#003163" className={styles.link}>Login</a>
+      <h2>{errorMsg}</h2>
+
       </form>
     </div>
-  );
+);
 }
+
 
 export default SignUpForm;
