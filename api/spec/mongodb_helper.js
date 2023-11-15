@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-require('./db');
+require('../models/db');
 
 beforeAll(function (done) {
   var db = mongoose.connection;
