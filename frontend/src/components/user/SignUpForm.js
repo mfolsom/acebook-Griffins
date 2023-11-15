@@ -11,9 +11,9 @@ const SignUpForm = ({ navigate }) => {
   const [errorMsg, setErrorMsg] = useState("")
   // FORM SUBMISSION FOR NEW USER ====================
   const handleSubmit = async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     // Send POST request to '/users' endpoint
-    fetch( '/users', {
+    fetch('/users', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -22,8 +22,8 @@ const SignUpForm = ({ navigate }) => {
     })
       .then(async response => {
         
-        
         if(response.status === 201) {
+
           navigate('/login') // If successful, navigate to login page
           
         } else {
@@ -46,8 +46,10 @@ const SignUpForm = ({ navigate }) => {
 
 
   // JSX FOR THE UI OF THE COMPONENT =====================
+
     // currently shows two input fields and one button with no styling.
     return (<div className={styles.Middle}>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
 
           <input placeholder="Email" id="email" type='text' value={ email } className={styles.inputField} onChange={handleEmailChange} />
@@ -56,7 +58,11 @@ const SignUpForm = ({ navigate }) => {
           <br/>
           <br/>
         <input id='submit' type="submit" className={styles.Button} value="Submit"/>
-         <h2>{errorMsg}</h2>
+      //TODO Double check style sheet references line 64 styles.link
+      <font color="#505050 ">Have an account?</font>
+    <br/>
+    <a href="/login" font color="#003163" className={styles.link}>Login</a>
+      <h2>{errorMsg}</h2>
 
       </form>
     </div>
