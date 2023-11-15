@@ -47,7 +47,6 @@ const App = () => {
       <Route path='/login' element={<LoginForm navigate={useNavigate()} />} />
       <Route path='/signup' element={<SignUpForm navigate={useNavigate()} />} />
       <Route path='/new_post' element={<NewPostForm navigate={useNavigate()} />} />
-      <Route path='/navigate' element={<Navbar navigate={ useNavigate() }/>}/>
     </Routes>
   );
 
